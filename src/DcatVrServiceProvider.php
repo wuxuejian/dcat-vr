@@ -1,9 +1,9 @@
 <?php
 
-namespace Wuxuejian;
+namespace Wuxuejian\DcatVr;
 
 use Dcat\Admin\Extend\ServiceProvider;
-use Dcat\Admin\Admin;
+use Wuxuejian\DcatVr\Setting;
 
 class DcatVrServiceProvider extends ServiceProvider
 {
@@ -13,6 +13,18 @@ class DcatVrServiceProvider extends ServiceProvider
 	protected $css = [
 		'css/index.css',
 	];
+
+	protected $menu = [
+	    [
+	        'title' => 'VR管理',
+            'uri' => '',
+        ],
+        [
+            'parent' => 'VR管理',
+            'title' => '活动列表',
+            'uri' => 'dcat-vr/vrs'
+        ]
+    ];
 
 	public function register()
 	{
@@ -24,7 +36,8 @@ class DcatVrServiceProvider extends ServiceProvider
 		parent::init();
 
 		//
-		
+        //$a = new DcatVrFrontendServiceProvider(app());
+        //$a->init();
 	}
 
 	public function settingForm()

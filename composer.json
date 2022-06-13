@@ -18,14 +18,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Wuxuejian\\": "src/"
+            "Wuxuejian\\DcatVr\\": "src/"
         }
     },
     "extra": {
-        "dcat-admin": "Wuxuejian\\DcatVrServiceProvider",
+        "dcat-admin": "Wuxuejian\\DcatVr\\DcatVrServiceProvider",
         "laravel": {
             "providers": [
-                "Wuxuejian\\DcatVrServiceProvider"
+                "Wuxuejian\\DcatVr\\DcatVrServiceProvider"
             ]
         }
     }
