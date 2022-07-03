@@ -78,23 +78,23 @@ class VrSceneController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new VrScene(), function (Form $form) {
-            $form->display('id');
-            $form->text('vr_id');
-            $form->text('name');
-            $form->text('description');
-            $form->text('scene_file');
-            $form->text('cover');
-            $form->text('scene_type');
-            $form->text('init_tilt');
-            $form->text('init_pan');
-            $form->text('init_fov');
-            $form->text('scene_format');
-            $form->text('is_loop');
-            $form->text('status');
 
+        return Form::make(VrScene::with('vr'), function (Form $form) {
+            $form->display('id');
             $form->display('created_at');
             $form->display('updated_at');
+            $form->display('vr.title','VR活动标题');
+            $form->text('name')->required();
+            $form->textarea('description');
+            $form->filePlus('scene_file')->required()->removable(false)->retainable()->maxSize(1000*1024)->qiniu('qiniuhf');
+            $form->image('cover')->required()->removable(false)->retainable()->maxSize(2000);
+            $form->select('scene_type')->options(['video'=>'视频'])->default('video');
+            $form->select('scene_format')->options([2=>'普通vr'])->default(2);
+            $form->number('init_tilt')->default(20)->help('初始tilt');
+            $form->number('init_pan')->default(180)->help('初始pan');
+            $form->number('init_fov')->default(100)->help('初始fov');
+            $form->select('is_loop')->options([1=>'开启',0=>'不开启'])->default(0);
+            $form->select('status')->options([1=>'正常',0=>'关闭'])->default(0);
         });
     }
 }

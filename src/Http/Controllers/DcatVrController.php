@@ -97,15 +97,15 @@ class DcatVrController extends AdminController
             $form->text('title');
             $form->editor('description');
             //$form->text('link');
-            if(!$disk = DcatVrServiceProvider::setting('disk')) {
-                //throw new InvalidArgumentException("queshaocansh",'100000');
-                $disk = "public";
-            }
-            if(!$vrDir = DcatVrServiceProvider::setting('vr-dir')) {
-                $vrDir = 'vr-activitys';
-            }
+            $disk = $this->setting('disk','public');
+
+            $vrDir = $this->setting('vr-dir','vr-activitys');
             //dump($disk);exit;
-            $form->image('cover')->disk($disk)->uniqueName();
+            $form->image('cover')->disk($disk)->dir($vrDir)->uniqueName()->removable(false)->retainable()
+            ->saving(function($cover) {
+                if(!$cover) return '';
+                return $cover;
+            });
             $form->switch('is_gyro')->help("是否开启陀螺仪")->default(1);
             $form->switch('full_screen')->help("是否开启全屏")->default(1);
             $form->radio('status')->options([1=>"开启",0=>"关闭"])->default(0);

@@ -6,6 +6,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\LazyRenderable;
 use Wuxuejian\DcatVr\Http\Actions\Grid\CreateVrSceneAction;
 use Wuxuejian\DcatVr\Http\Actions\Grid\DelOrRestoreVrScenceAction;
+use Wuxuejian\DcatVr\Http\Actions\Grid\EditVrScenceAction;
 use Wuxuejian\DcatVr\Repositories\Vr;
 use Wuxuejian\DcatVr\Repositories\VrScene;
 
@@ -22,17 +23,21 @@ class SceneTable extends LazyRenderable
             }
             $grid->model()->withTrashed();
             $grid->disableRowSelector();
-            $grid->setActionClass(Grid\Displayers\Actions::class);
-            $grid->disableEditButton();
-            $grid->disableCreateButton();
-            $grid->disableDeleteButton();
-            $grid->disableActions();
+            //$grid->setActionClass(Grid\Displayers\Actions::class);
+            //$grid->disableEditButton();
+            //$grid->disableCreateButton();
+            //$grid->disableDeleteButton();
+            $grid->disableViewButton();
+            //$grid->disableActions();
             $grid->column('name');
             $grid->column('cover');
             $grid->column('status')->switch();
             $grid->column('deleted_at')->action(new DelOrRestoreVrScenceAction());
             //$grid->disableActions(false);
-            //$grid->actions([new CreateVrSceneAction()]);
+            $grid->actions(function($actions) {
+               // $actions->append('<a href=""><i class="fa fa-eye"></i></a>');
+                //$actions->append(new EditVrScenceAction());
+            });
             //$grid->disableActions();
             //$grid->disableCreateButton();
             $grid->setName('hfidho'.$vrId);
