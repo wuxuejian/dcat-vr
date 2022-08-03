@@ -2,5 +2,6 @@
 
 use Wuxuejian\DcatVr\Http\Controllers;
 use Illuminate\Support\Facades\Route;
+use Wuxuejian\DcatVr\Http\Controllers\Frontend\VrController;
 
-Route::get('vr', Controllers\Frontend\VrController::class.'@index');
+Route::apiResource('vrs',VrController::class);

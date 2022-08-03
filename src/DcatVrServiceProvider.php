@@ -36,8 +36,8 @@ class DcatVrServiceProvider extends ServiceProvider
 		parent::init();
 
 		//
-        //$a = new DcatVrFrontendServiceProvider(app());
-        //$a->init();
+        $a = new DcatVrFrontendServiceProvider(app());
+        $a->init();
 	}
 
 	public function settingForm()

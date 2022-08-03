@@ -2,6 +2,7 @@
 
 namespace Wuxuejian\DcatVr;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Dcat\Admin\Admin;
 use RuntimeException;
@@ -23,41 +24,32 @@ class DcatVrFrontendServiceProvider extends LaravelServiceProvider
 
 	public function init()
 	{
-		//parent::init();
-
-
         $path = $this->path('src/Http/routes-frontend.php');
         $this->registerRoutes($path);
 
-		//$this->loadRoutesFrom($path);
-		//
 
 	}
 
 	public function boot() {
         $this->init();
     }
-	public function settingForm()
-	{
-		return new Setting($this);
-	}
 
-
-
-    /**
-     * 注册路由.
-     *
-     * @param $callback
-     */
-    public function registerRoutes($callback)
+    protected function registerRoutes($path)
     {
-        Admin::app()->routes(function ($router) use ($callback) {
-            $router->group([
-                'prefix'     => config('admin.route.frontend_prefix',"vrx"),
-                //'middleware' => config('admin.route.frontend_middleware'),
-            ], $callback);
+        Route::group($this->routeConfiguration(), function () use($path) {
+            $this->loadRoutesFrom($path);
         });
     }
+
+    protected function routeConfiguration()
+    {//admin.route.frontend_prefix
+        return [
+            'prefix' => config('admin.route.vr.prefix','vrapi'),
+            'middleware' => config('admin.route.vr.middleware',['api']),
+        ];
+    }
+
+
 
     /**
      * 获取扩展包路径.
