@@ -44,7 +44,7 @@ class DcatVrFrontendServiceProvider extends LaravelServiceProvider
     protected function routeConfiguration()
     {//admin.route.frontend_prefix
         return [
-            'prefix' => config('admin.route.vr.prefix','vrapi'),
+            'prefix' => 'api/'.config('admin.route.vr.prefix','vrapi'),
             'middleware' => config('admin.route.vr.middleware',['api']),
         ];
     }

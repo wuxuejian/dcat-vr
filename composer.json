@@ -14,7 +14,8 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "dcat/laravel-admin": "~2.0"
+        "dcat/laravel-admin": "~2.0",
+        "wuxuejian/dcat-qiniu-upload": ">=1.0"
     },
     "autoload": {
         "psr-4": {
