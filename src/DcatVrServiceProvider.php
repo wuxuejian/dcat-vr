@@ -23,6 +23,11 @@ class DcatVrServiceProvider extends ServiceProvider
             'parent' => 'VR管理',
             'title' => '活动列表',
             'uri' => 'dcat-vr/vrs'
+        ],
+        [
+            'parent' => 'VR管理',
+            'title' => '场景列表',
+            'uri' => 'dcat-vr/vrscenes'
         ]
     ];
 

@@ -2,6 +2,7 @@
 
 namespace Wuxuejian\DcatVr\Http\Controllers;
 
+use Wuxuejian\DcatVr\DcatVrServiceProvider;
 use Wuxuejian\DcatVr\Http\Tables\SceneTable;
 use Wuxuejian\DcatVr\Models\VrScene;
 use Dcat\Admin\Form;
@@ -79,16 +80,21 @@ class VrSceneController extends AdminController
     protected function form()
     {
 
+
         return Form::make(VrScene::with('vr'), function (Form $form) {
+            $setting = DcatVrServiceProvider::setting();
             $form->display('id');
+            $form->display('vr.title');
             $form->display('created_at');
             $form->display('updated_at');
             $form->display('vr.title','VR活动标题');
             $form->text('name')->required();
             $form->textarea('description');
-            $form->filePlus('scene_file')->required()->removable(false)->retainable()->maxSize(1000*1024)->qiniu('qiniuhf');
-            $form->image('cover')->required()->removable(false)->retainable()->maxSize(2000);
-            $form->select('scene_type')->options(['video'=>'视频'])->default('video');
+            $form->filePlus('scene_file')->required()->uniqueName()
+                ->maxSize(1000*1024)->qiniu($setting['disk_video'])->removable(false)
+                ->retainable();
+            $form->image('cover')->disk($setting['disk'])->required()->removable(false)->retainable()->maxSize(2000);
+            $form->select('scene_type')->options(['Video'=>'视频'])->default('Video');
             $form->select('scene_format')->options([2=>'普通vr'])->default(2);
             $form->number('init_tilt')->default(20)->help('初始tilt');
             $form->number('init_pan')->default(180)->help('初始pan');

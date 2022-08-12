@@ -5,11 +5,13 @@ namespace Wuxuejian\DcatVr\Models;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Wuxuejian\DcatVr\Models\Traits\FullUrl;
 
 class VrScene extends Model
 {
 	use HasDateTimeFormatter;
     use SoftDeletes;
+    use FullUrl;
 
     protected $fillable = [
       'name','description','scene_file','cover','scene_type','init_tilt','init_pan','init_fov','scene_format','is_loop','status'

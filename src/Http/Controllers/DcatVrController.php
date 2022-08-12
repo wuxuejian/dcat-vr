@@ -101,6 +101,7 @@ class DcatVrController extends AdminController
 
             $vrDir = $this->setting('vr-dir','vr-activitys');
             //dump($disk);exit;
+            $form->bigFileUpload('bigimg');
             $form->image('cover')->disk($disk)->dir($vrDir)->uniqueName()->removable(false)->retainable()
             ->saving(function($cover) {
                 if(!$cover) return '';

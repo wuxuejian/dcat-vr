@@ -54,17 +54,27 @@ class CreateVrSceneForm extends Form implements LazyRenderable
         //dump(app("translator"));
         //dump($this->payload);
         //$this->display('vr_id')->default($this->payload['id']);
+        $setting = DcatVrServiceProvider::setting();
+        //$this->bigFileUpload('bigimg');
 
         $this->text('name',DcatVrServiceProvider::trans("vr-scene.fields.name"))->required();
         $this->textarea('description',DcatVrServiceProvider::trans("vr-scene.fields.description"));
-        $this->filePlus('scene_file',DcatVrServiceProvider::trans("vr-scene.fields.scene_file"))->required()->removable(false)->retainable()->maxSize(1000*1024)->qiniu('qiniuhf');
-        $this->image('cover',DcatVrServiceProvider::trans("vr-scene.fields.cover"))->required()->removable(false)->retainable()->maxSize(2000);
-        $this->select('scene_type',DcatVrServiceProvider::trans("vr-scene.fields.scene_type"))->options(['video'=>'视频'])->default('video');
-        $this->select('scene_format',DcatVrServiceProvider::trans("vr-scene.fields.scene_format"))->options([2=>'普通vr'])->default(2);
-        $this->number('init_tilt',DcatVrServiceProvider::trans("vr-scene.fields.init_tilt"))->default(20)->help('初始tilt');
-        $this->number('init_pan',DcatVrServiceProvider::trans("vr-scene.fields.init_pan"))->default(180)->help('初始pan');
-        $this->number('init_fov',DcatVrServiceProvider::trans("vr-scene.fields.init_fov"))->default(100)->help('初始fov');
-        $this->select('is_loop',DcatVrServiceProvider::trans("vr-scene.fields.is_loop"))->options([1=>'开启',0=>'不开启'])->default(0);
+        $this->filePlus('scene_file',DcatVrServiceProvider::trans("vr-scene.fields.scene_file"))->required()
+            ->removable(false)->retainable()->maxSize(1000*1024)->qiniu($setting['disk_video'])->accept("mp4");
+        $this->image('cover',DcatVrServiceProvider::trans("vr-scene.fields.cover"))->uniqueName()
+            ->disk($setting['disk'])->required()->removable(false)->retainable()->maxSize(2000);
+        $this->select('scene_type',DcatVrServiceProvider::trans("vr-scene.fields.scene_type"))
+            ->options(['Video'=>'视频'])->default('Video');
+        $this->select('scene_format',DcatVrServiceProvider::trans("vr-scene.fields.scene_format"))
+            ->options([2=>'普通vr'])->default(2);
+        $this->number('init_tilt',DcatVrServiceProvider::trans("vr-scene.fields.init_tilt"))
+            ->default(20)->help('初始tilt');
+        $this->number('init_pan',DcatVrServiceProvider::trans("vr-scene.fields.init_pan"))
+            ->default(180)->help('初始pan');
+        $this->number('init_fov',DcatVrServiceProvider::trans("vr-scene.fields.init_fov"))
+            ->default(100)->help('初始fov');
+        $this->select('is_loop',DcatVrServiceProvider::trans("vr-scene.fields.is_loop"))
+            ->options([1=>'开启',0=>'不开启'])->default(0);
         $this->select('status')->options([1=>'正常',0=>'关闭'])->default(0);
 
 

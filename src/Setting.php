@@ -12,7 +12,8 @@ class Setting extends Form
     }
     public function form()
     {
-        $this->text('disk','磁盘')->required();
+        $this->text('disk','图片磁盘')->required();
+        $this->text('disk_video','视频磁盘')->required();
         $this->text('vr-dir','目录');
     }
 }

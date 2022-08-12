@@ -4,6 +4,8 @@ namespace Wuxuejian\DcatVr\Http\Tables;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\LazyRenderable;
+use Illuminate\Support\Facades\Storage;
+use Wuxuejian\DcatVr\DcatVrServiceProvider;
 use Wuxuejian\DcatVr\Http\Actions\Grid\CreateVrSceneAction;
 use Wuxuejian\DcatVr\Http\Actions\Grid\DelOrRestoreVrScenceAction;
 use Wuxuejian\DcatVr\Http\Actions\Grid\EditVrScenceAction;
@@ -21,6 +23,7 @@ class SceneTable extends LazyRenderable
             if($vrId) {
                 $grid->model()->where('vr_id',$vrId);
             }
+            $setting = DcatVrServiceProvider::setting();
             $grid->model()->withTrashed();
             $grid->disableRowSelector();
             //$grid->setActionClass(Grid\Displayers\Actions::class);
@@ -30,7 +33,10 @@ class SceneTable extends LazyRenderable
             $grid->disableViewButton();
             //$grid->disableActions();
             $grid->column('name');
-            $grid->column('cover');
+            $grid->column('cover')->display(function($cover){
+                if(!$cover) return Storage::disk('image')->url('default-cover-image.png');
+                return $cover;
+            })->image(Storage::disk($setting['disk'])->url(''));
             $grid->column('status')->switch();
             $grid->column('deleted_at')->action(new DelOrRestoreVrScenceAction());
             //$grid->disableActions(false);

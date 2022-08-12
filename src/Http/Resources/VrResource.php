@@ -3,6 +3,8 @@
 namespace Wuxuejian\DcatVr\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Wuxuejian\DcatVr\DcatVrServiceProvider;
+use Wuxuejian\DcatVr\Models\Vr;
 
 class VrResource extends JsonResource
 {
@@ -14,12 +16,13 @@ class VrResource extends JsonResource
      */
     public function toArray($request)
     {
+        $setting = DcatVrServiceProvider::setting();
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->descripton,
             'link' => $this->link,
-            'cover' => $this->cover,
+            'cover' => Vr::getFullUrl($this->cover,$setting['disk']),
             'is_gyro' => $this->is_gyro,
             'full_screen' => $this->full_screen,
             'status' => $this->status,
